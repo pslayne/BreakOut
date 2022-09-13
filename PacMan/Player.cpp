@@ -53,6 +53,7 @@ void Player::OnCollision(Object * obj)
     if (obj->Type() == BALL)
     {
         Ball * ball = (Ball*) obj;
+        ball->MoveTo(ball->X(), y - 17);
         ball->velY = -ball->velY;
     }    
 }

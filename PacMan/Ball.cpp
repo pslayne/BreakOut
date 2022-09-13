@@ -48,17 +48,27 @@ void Ball::OnCollision(Object * obj)
 {
     // bola colide com bloco
     if (obj->Type() == BLOCK) {
-        Block* block = (Block*)obj;
 
-        if (block->color == Color::gray) block->color = Color::red;
-        else if (block->color == Color::red) block->color = Color::purple;
-        else if (block->color == Color::purple) block->color = Color::blue;
-        else if (block->color == Color::blue) block->color = Color::yellow;
-        else if (block->color == Color::yellow) block->color = Color::green;
-        else Breakout::scene->Delete(obj, STATIC);
+        Block* block = (Block*) obj;
+        switch (block->color) {
+            case Color::gray: block->color = Color::red;
+            case Color::red: block->color = Color::purple;
+            case Color::purple: block->color = Color::blue;
+            case Color::blue: block->color = Color::yellow;
+            case Color::yellow: block->color = Color::green;
+            default: Breakout::scene->Delete(obj, STATIC);
+        }
 
-        velX *= -1;
-        velY *= -1;
+                
+        Rect* box = (Rect*) obj->BBox();
+
+        box->X();
+        box->Left();
+
+        if (x < box->Left() || x > box->Right())
+            velX = -velX;
+        if (y < box->Top() || y > box->Bottom())
+            velY = -velY;
     }
 
     // experimente deixar o bloco cair em vez de removê-lo da cena
@@ -73,9 +83,8 @@ void Ball::Update()
     {
         Translate(velX * gameTime, velY * gameTime);
 
-        // se o jogador não rebater, a bola é reiniciada
-        //if (y + sprite->Height() > window->Height())
-        //    player->state = STOPED;
+        if (y + sprite->Height() > window->Height())
+            player->state = STOPED;
     }
     else
     {

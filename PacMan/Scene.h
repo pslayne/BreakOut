@@ -78,6 +78,7 @@ public:
     void Delete(Object * obj, int type);        // deleta objeto da lista indicada (STATIC ou MOVING)
     void Delete();                              // deleta o objeto cujo Update/Draw está sendo executado
     uint Size();                                // retorna a quantidade de objetos na cena
+    uint SizeStatics();                         // retorna a quantidade de objetos estáticos na cena
 
     void Begin();                               // inicia percurso na lista de objetos
     Object * Next();                            // retorna próximo objeto da lista

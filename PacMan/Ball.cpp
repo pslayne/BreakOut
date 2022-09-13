@@ -48,7 +48,15 @@ void Ball::OnCollision(Object * obj)
 {
     // bola colide com bloco
     if (obj->Type() == BLOCK) {
-        Breakout::scene->Delete(obj, STATIC);
+        Block* block = (Block*)obj;
+
+        if (block->color == Color::gray) block->color = Color::red;
+        else if (block->color == Color::red) block->color = Color::purple;
+        else if (block->color == Color::purple) block->color = Color::blue;
+        else if (block->color == Color::blue) block->color = Color::yellow;
+        else if (block->color == Color::yellow) block->color = Color::green;
+        else Breakout::scene->Delete(obj, STATIC);
+
         velX *= -1;
         velY *= -1;
     }

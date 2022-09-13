@@ -15,6 +15,7 @@
 #include "Player.h"
 #include "Block.h"
 #include "Ball.h"
+#include "Lost.h"
 
 // ------------------------------------------------------------------------------
 // Inicialização de membros estáticos da classe
@@ -103,6 +104,9 @@ void Breakout::Update()
 
     // detecção e resolução de colisão
     scene->CollisionDetection();
+
+    if (window->KeyDown(VK_RETURN))
+        Engine::Next<Lost>();
 } 
 
 // ------------------------------------------------------------------------------

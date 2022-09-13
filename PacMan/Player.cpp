@@ -72,10 +72,10 @@ void Player::Update()
         Translate(-vel * gameTime, 0);
 
     // mantém jogador dentro da janela (tam. da barra: 100x20)
-    if (x < 0)
-        MoveTo(0.0f, y);
-    if (x + sprite->Width() > window->Width())
-        MoveTo(float(window->Width() - sprite->Width()), y);
+    if (x - sprite->Width() / 2 < 0)
+        MoveTo(sprite->Width() / 2, y);
+    if (x + sprite->Width() / 2 > window->Width())
+        MoveTo(window->Width() - sprite->Width() / 2, y);
 }
 
 // ---------------------------------------------------------------------------------

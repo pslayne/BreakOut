@@ -17,10 +17,10 @@
 
 Player::Player() {
     // sprite do jogador
-    sprite = new Sprite("Resources/Player.png");
+    Img(new Sprite("Resources/Player.png"));
 
     //bounding box
-    BBox(new Rect(-sprite->Width()/2, -sprite->Height() / 2, sprite->Width() / 2, sprite->Height() / 2));
+    BBox(new Rect(Width(), Height()));
 
     // centraliza o jogador
     MoveTo(window->CenterX(), 
@@ -42,7 +42,7 @@ Player::Player() {
 
 Player::~Player()
 {
-    delete sprite;
+
 }
 
 // ---------------------------------------------------------------------------------
@@ -74,8 +74,8 @@ void Player::Update()
     // mantém jogador dentro da janela (tam. da barra: 100x20)
     if (x < 0)
         MoveTo(0.0f, y);
-    if (x + sprite->Width() > window->Width())
-        MoveTo(float(window->Width() - sprite->Width()), y);
+    if (x + Img()->Width() > window->Width())
+        MoveTo(float(window->Width() - Img()->Width()), y);
 }
 
 // ---------------------------------------------------------------------------------

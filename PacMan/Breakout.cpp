@@ -15,6 +15,7 @@
 #include "Player.h"
 #include "Block.h"
 #include "Ball.h"
+#include <random>
 
 // ------------------------------------------------------------------------------
 // Inicialização de membros estáticos da classe
@@ -47,16 +48,19 @@ void Breakout::Init()
 
     float line = 50.0f;
     float column = -320.0f;
-    
 
     // -----------------------------------------
-    // linha de blocos    
+    // linha de blocos 
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, 5);
 
     Block* block;
 
     for (int i = 0; i < 6; i++) {
         for (int j = 0; j < 9; j++) {
-            block = new Block();
+            block = new Block((Color)dist(gen));
             block->MoveTo(window->CenterX() + column, line);
             scene->Add(block, STATIC);
 

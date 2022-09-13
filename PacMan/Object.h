@@ -22,6 +22,7 @@
 #include "Game.h"               // representação de um jogo
 #include "Window.h"             // janela usada para o jogo
 #include "Geometry.h"           // todo objeto deve ter uma bounding box
+#include "Sprite.h"             // o objeto pode ter uma sprite; 
 
 // -----------------------------------------------------------------------------
 
@@ -30,6 +31,7 @@ class Object
 private:
     float posX, posY, posZ;     // coordenadas do objeto
     Geometry* bbox;             // bounding box do objeto
+    Sprite* sprite;             // sprite do objeto
 
 protected:
     static Window* & window;    // janela do jogo
@@ -53,6 +55,12 @@ public:
     // e chamadas corretamente mesmo usando um
     // ponteiro para a classe base
 
+    // largura da bola
+    virtual float Width();
+
+    // altura da bola
+    virtual float Height();
+
     // retorna coordenada x do objeto
     virtual float X() const;
 
@@ -70,6 +78,12 @@ public:
 
     // retorna a bounding box do objeto
     virtual Geometry* BBox() const;
+
+    // muda a sprite do objeto
+    virtual void Img(Sprite* sp);
+
+    // retorna a sprite do objeto
+    virtual Sprite* Img() const;
 
     // move o objeto por (deltaX, deltaY, deltaZ)
     virtual void Translate(float dx, float dy, float dz = 0.0f);
@@ -99,6 +113,14 @@ public:
 // -----------------------------------------------------------------------------
 // Métodos Inline
 
+// retorna a largura do objeto
+inline float Object::Width()
+{ return float(sprite->Width()); }
+
+// retorna a altura do objeto
+inline float Object::Height()
+{ return float(sprite->Height()); }
+
 // retorna coordenada x do objeto
 inline float Object::X() const
 { return posX; }
@@ -118,6 +140,10 @@ inline uint Object::Type() const
 // retorna a bounding box do objeto
 inline Geometry* Object::BBox() const
 { return bbox; }
+
+// retorna a sprite do objeto
+inline Sprite* Object::Img() const
+{ return sprite; }
 
 // -----------------------------------------------------------------------------
 

@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Player (Arquivo de Cabeçalho)
+// Player (Arquivo de Cabeï¿½alho)
 // 
-// Criação:     22 Dez 2012
-// Atualização: 20 Ago 2021
+// Criaï¿½ï¿½o:     22 Dez 2012
+// Atualizaï¿½ï¿½o: 20 Ago 2021
 // Compilador:  Visual C++ 14
 //
-// Descrição:   Player do jogo Breakout
+// Descriï¿½ï¿½o:   Player do jogo Breakout
 //
 **********************************************************************************/
 
@@ -28,7 +28,7 @@ Player::Player() {
            Layer::FRONT);
 
     // velocidade do jogador
-    vel = 500; 
+    vel = 600; 
 
     // estado inicial do jogo
     state = STOPED;
@@ -53,6 +53,7 @@ void Player::OnCollision(Object * obj)
     if (obj->Type() == BALL)
     {
         Ball * ball = (Ball*) obj;
+        ball->MoveTo(ball->X(), y - 17);
         ball->velY = -ball->velY;
     }    
 }
@@ -61,7 +62,7 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-    // inicia o jogo com barra de espaço
+    // inicia o jogo com barra de espaï¿½o
     if (state == STOPED && window->KeyDown(VK_SPACE))
         state = PLAYING;
 
@@ -71,11 +72,11 @@ void Player::Update()
     if (window->KeyDown(VK_LEFT))
         Translate(-vel * gameTime, 0);
 
-    // mantém jogador dentro da janela (tam. da barra: 100x20)
-    if (x < 0)
-        MoveTo(0.0f, y);
-    if (x + Img()->Width() > window->Width())
-        MoveTo(float(window->Width() - Img()->Width()), y);
+    // mantï¿½m jogador dentro da janela (tam. da barra: 100x20)
+    if (x - Img()->Width() / 2 < 0)
+        MoveTo(Img()->Width() / 2, y);
+    if (x + Img()->Width() / 2 > window->Width())
+        MoveTo(window->Width() - Img()->Width() / 2, y);
 }
 
 // ---------------------------------------------------------------------------------

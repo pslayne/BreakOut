@@ -11,52 +11,41 @@
 
 #include "Block.h"
 #include "Breakout.h"
-#include <random>
-#include <sstream>
-using std::stringstream;
 
+char imgBlokList[6][19] = {
+        "Resources/BBlu.png",
+        "Resources/BGra.png",
+        "Resources/BGre.png",
+        "Resources/BPur.png",
+        "Resources/BRed.png",
+        "Resources/BYel.png"
+};
 
 // ---------------------------------------------------------------------------------
-Block::Block() {
-    // sprites dos blocos
-    gray = new Sprite("Resources/Tile1.png");
-    red = new Sprite("Resources/Tile2.png");
-    purple = new Sprite("Resources/Tile3.png");
-    blue = new Sprite("Resources/Tile4.png");
-    yellow = new Sprite("Resources/Tile5.png");
-    green = new Sprite("Resources/Tile6.png");
-
-    //bounding box - cada bloco tem dimensões 60x17
-    BBox(new Rect(-30, -8.5, 30, 8.5));
-
-    // velocidades iniciais
-    velX = 0.0f;
-    velY = 0.0f;
+Block::Block(Color co) {
+    // bounding box - cada bloco tem dimensões 60x17
+    BBox(new Rect(60, 17));
 
     // tipo do objeto
     type = BLOCK;
 
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, 5);
-    color = (Color)dist(gen);
-    
-    /*stringstream text;
-    text << "color: " << color << "\n";
+    // velocidades sempre nulas
+    velX = 0.0f;
+    velY = 0.0f;
 
-    OutputDebugString(text.str().c_str());*/
+    // sprite do bloco
+    Img(new Sprite(imgBlokList[co]));
+    
+    // cor do bloco
+    color = co;
+
+    // OutputDebugString(text.str().c_str());
 }
 
 // ---------------------------------------------------------------------------------
 
 Block::~Block()
 {
-    delete gray;
-    delete red;
-    delete purple;
-    delete blue;
-    delete yellow;
-    delete green;
 
 }
 
@@ -70,16 +59,6 @@ void Block::Update()
     // destrói ao sair da janela
     if (y > window->Height())
         Breakout::scene->Delete();
-}
-
-void Block::Draw() {
-    if (color == Color::gray) gray->Draw(x, y, z);
-    else if (color == Color::red) red->Draw(x, y, z);
-    else if (color == Color::purple) purple->Draw(x, y, z);
-    else if (color == Color::blue) blue->Draw(x, y, z);
-    else if (color == Color::yellow) yellow->Draw(x, y, z);
-    else green->Draw(x, y, z);
-
 }
 
 // ---------------------------------------------------------------------------------

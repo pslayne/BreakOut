@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Ball (Arquivo de Cabeçalho)
+// Ball (Arquivo de Cabeï¿½alho)
 // 
-// Criação:     22 Dez 2012
-// Atualização: 02 Set 2021
+// Criaï¿½ï¿½o:     22 Dez 2012
+// Atualizaï¿½ï¿½o: 02 Set 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Bola do jogo Breakout
+// Descriï¿½ï¿½o:   Bola do jogo Breakout
 //
 **********************************************************************************/
 
@@ -24,7 +24,7 @@ Ball::Ball(Player * p)
     sprite  = new Sprite("Resources/Ball.png");
     BBox(new Circle(sprite->Height()/2));
 
-    // tamanho do player é 100x20
+    // tamanho do player ï¿½ 100x20
     MoveTo(player->X(), player->Y() - 17, Layer::FRONT);
 
     // velocidades iniciais
@@ -58,20 +58,15 @@ void Ball::OnCollision(Object * obj)
             case Color::yellow: block->color = Color::green;
             default: Breakout::scene->Delete(obj, STATIC);
         }
-
-                
+        
         Rect* box = (Rect*) obj->BBox();
-
-        box->X();
-        box->Left();
-
         if (x < box->Left() || x > box->Right())
             velX = -velX;
         if (y < box->Top() || y > box->Bottom())
             velY = -velY;
     }
 
-    // experimente deixar o bloco cair em vez de removê-lo da cena
+    // experimente deixar o bloco cair em vez de removï¿½-lo da cena
         //((Block*) obj)->velY = 200.0f;
 }
 
@@ -88,12 +83,11 @@ void Ball::Update()
     }
     else
     {
-        // mova para posição acima do player e o acompanhe
+        // mova para posiï¿½ï¿½o acima do player e o acompanhe
         MoveTo(player->X(), player->Y() - 17, Layer::FRONT);
     }
-        
 
-    // mantém a bola dentro da tela (tam. da bola: 12x12)
+    // mantï¿½m a bola dentro da tela (tam. da bola: 12x12)
     if (x < 0)
     {
         MoveTo(0.0f, y);

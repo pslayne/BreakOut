@@ -11,13 +11,13 @@
 
 #include "Engine.h"
 #include "Home.h"
-#include "Level1.h"
+#include "Breakout.h"
 
 // ------------------------------------------------------------------------------
 
 void Home::Init()
 {
-    backg = new Sprite("Resources/TitleScreen.jpg");
+    backg = new Sprite("Resources/breakout.png");
 }
 
 // ------------------------------------------------------------------------------
@@ -42,9 +42,9 @@ void Home::Update()
         ctrlKeyESC = true;
     }
 
-    // passa ao primeiro nível com ENTER
-    if (window->KeyDown(VK_RETURN))
-        Engine::Next<Level1>();
+    // passa ao primeiro nível com ESPAÇO
+    if (window->KeyDown(VK_SPACE))
+        Engine::Next<Breakout>();
 }
 
 // ------------------------------------------------------------------------------
@@ -55,3 +55,24 @@ void Home::Draw()
 }
 
 // ------------------------------------------------------------------------------
+
+int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
+{
+    Engine* engine = new Engine();
+
+    // configura a janela do jogo
+    engine->window->Mode(WINDOWED);
+    engine->window->Size(960, 540);
+    engine->window->Color(0, 0, 0);
+    engine->window->Title("SkyOut");
+    engine->window->Icon(IDI_ICON);
+
+    // configura dispositivo gráfico
+    //engine->graphics->VSync(true);
+
+    // inicia o jogo
+    int status = engine->Start(new Home());
+
+    delete engine;
+    return status;
+}

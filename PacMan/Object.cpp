@@ -38,6 +38,9 @@ Object::Object()
 
     // bounding box do objeto
     bbox = nullptr;
+
+    // sprite do objeto
+    sprite = nullptr;
 }
 
 // -------------------------------------------------------------------------------
@@ -46,6 +49,9 @@ Object::~Object()
 {
     if (bbox)
         delete bbox;
+
+    if (sprite)
+        delete sprite;
 }
 
 // -------------------------------------------------------------------------------
@@ -57,6 +63,16 @@ void Object::BBox(Geometry* bb)
 
     bbox = bb;
     bbox->Translate(x, y);
+}
+
+// -------------------------------------------------------------------------------
+
+void Object::Img(Sprite* sp)
+{
+    if (sprite)
+        delete sprite;
+
+    sprite = sp;
 }
 
 // -------------------------------------------------------------------------------

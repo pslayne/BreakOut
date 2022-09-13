@@ -19,34 +19,17 @@
 #include "Object.h"             // interface de Object
 #include "Sprite.h"             // interface de Sprites
 
-enum Color {gray, red, purple, blue, yellow, green};
+enum Color { blue, gray, green, purple, red, yellow };
 
 // ---------------------------------------------------------------------------------
 
 class Block : public Object
 {
-private:
-    // sprites do bloco
-    Sprite * gray;
-    Sprite * red;
-    Sprite * purple;
-    Sprite * blue;
-    Sprite * yellow;
-    Sprite * green;
-
-    //ponteiros para as imagens
-    static Image * grayImg;
-    static Image * redImg;
-    static Image * purpleImg;
-    static Image * blueImg;
-    static Image * yellowImg;
-    static Image * greenImg;
-
 public:
     float velX;                 // velocidade horizontal
     float velY;                 // velocidade vertical
 
-    Block();         // construtor
+    Block(Color co);                    // construtor
     ~Block();                   // destrutor
 
     void Update();              // atualização do objeto
@@ -54,5 +37,8 @@ public:
 
     Color color;
 };
+
+inline void Block::Draw()
+{ Img()->Draw(x, y, z); }
 
 #endif

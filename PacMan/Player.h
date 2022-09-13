@@ -28,8 +28,7 @@ enum PLAYERSTATE {PLAYING, STOPED};
 
 class Player : public Object
 {
-private:
-    Sprite * sprite;                    // sprite do jogador       
+private:   
     float vel;                          // velocidade do jogador
 
 public:
@@ -46,7 +45,7 @@ public:
 // ---------------------------------------------------------------------------------
 
 inline void Player::Draw()
-{ sprite->Draw(x,y,z); }
+{ Img()->Draw(x, y, z); }
 
 // ---------------------------------------------------------------------------------
 

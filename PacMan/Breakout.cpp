@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Breakout (Código Fonte)
+// Breakout (Cï¿½digo Fonte)
 // 
-// Criação:     26 Mar 2012
-// Atualização: 20 Ago 2021
+// Criaï¿½ï¿½o:     26 Mar 2012
+// Atualizaï¿½ï¿½o: 20 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Uso da classe Scene para gerenciar objetos e tratar colisão
+// Descriï¿½ï¿½o:   Uso da classe Scene para gerenciar objetos e tratar colisï¿½o
 //
 **********************************************************************************/
 
@@ -15,10 +15,12 @@
 #include "Player.h"
 #include "Block.h"
 #include "Ball.h"
+#include "Lost.h"
+#include "Won.h"
 #include <random>
 
 // ------------------------------------------------------------------------------
-// Inicialização de membros estáticos da classe
+// Inicializaï¿½ï¿½o de membros estï¿½ticos da classe
 
 Scene * Breakout::scene = nullptr;
 
@@ -30,7 +32,7 @@ void Breakout::Init()
     scene = new Scene();
 
     // carrega background
-    backg = new Sprite("Resources/Background.jpg");
+    backg = new Sprite("Resources/Background.png");
     
     // ---------------------------
     // cria jogador
@@ -44,7 +46,7 @@ void Breakout::Init()
     scene->Add(ball, MOVING);
 
     // -----------------------------------------
-    // posição dos blocos
+    // posiï¿½ï¿½o dos blocos
 
     float line = 50.0f;
     float column = -320.0f;
@@ -80,7 +82,7 @@ void Breakout::Update()
     if (window->KeyDown(VK_ESCAPE))
         window->Close();
     
-    // habilita/desabilita visualização de sprites
+    // habilita/desabilita visualizaï¿½ï¿½o de sprites
     if (ctrlKeyS && window->KeyDown('S'))
     {
         viewScene = !viewScene;
@@ -91,7 +93,7 @@ void Breakout::Update()
         ctrlKeyS = true;
     }    
 
-    // habilita/desabilita visualização da bounding box
+    // habilita/desabilita visualizaï¿½ï¿½o da bounding box
     if (ctrlKeyB && window->KeyDown('B'))
     {
         viewBBox = !viewBBox;
@@ -105,8 +107,14 @@ void Breakout::Update()
     // atualiza objetos da cena
     scene->Update();
 
-    // detecção e resolução de colisão
+    // detecï¿½ï¿½o e resoluï¿½ï¿½o de colisï¿½o
     scene->CollisionDetection();
+
+    if (window->KeyDown(VK_RETURN))
+        Engine::Next<Lost>();
+
+    if (window->KeyDown('W'))
+        Engine::Next<Won>();
 } 
 
 // ------------------------------------------------------------------------------
@@ -145,33 +153,4 @@ void Breakout::Finalize()
     delete yellowTile;
     delete greenTile;*/
 }
-
-// ------------------------------------------------------------------------------
-//                                  WinMain                                      
-// ------------------------------------------------------------------------------
-
-int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
-                     _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
-{
-    Engine * engine = new Engine();
-
-    // configura a janela
-    engine->window->Mode(WINDOWED);
-    engine->window->Size(960, 540);
-    engine->window->Color(0, 0, 0);
-    engine->window->Title("Breakout");
-    engine->window->Icon(IDI_ICON);
-    //engine->window->Cursor(IDC_CURSOR);
-
-    // configura dispositivo gráfico
-    //engine->graphics->VSync(true);
-    
-    // inicia jogo
-    int status = engine->Start(new Breakout());
-
-    delete engine;
-    return status;
-}
-
-// ----------------------------------------------------------------------------
 

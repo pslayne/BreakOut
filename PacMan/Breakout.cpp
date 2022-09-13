@@ -16,6 +16,7 @@
 #include "Block.h"
 #include "Ball.h"
 #include "Lost.h"
+#include "Won.h"
 
 // ------------------------------------------------------------------------------
 // Inicialização de membros estáticos da classe
@@ -107,6 +108,9 @@ void Breakout::Update()
 
     if (window->KeyDown(VK_RETURN))
         Engine::Next<Lost>();
+
+    if (window->KeyDown('W'))
+        Engine::Next<Won>();
 } 
 
 // ------------------------------------------------------------------------------

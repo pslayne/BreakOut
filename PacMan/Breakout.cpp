@@ -142,32 +142,3 @@ void Breakout::Finalize()
     delete greenTile;*/
 }
 
-// ------------------------------------------------------------------------------
-//                                  WinMain                                      
-// ------------------------------------------------------------------------------
-
-int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
-                     _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
-{
-    Engine * engine = new Engine();
-
-    // configura a janela
-    engine->window->Mode(WINDOWED);
-    engine->window->Size(960, 540);
-    engine->window->Color(0, 0, 0);
-    engine->window->Title("Breakout");
-    engine->window->Icon(IDI_ICON);
-    //engine->window->Cursor(IDC_CURSOR);
-
-    // configura dispositivo gráfico
-    //engine->graphics->VSync(true);
-    
-    // inicia jogo
-    int status = engine->Start(new Breakout());
-
-    delete engine;
-    return status;
-}
-
-// ----------------------------------------------------------------------------
-

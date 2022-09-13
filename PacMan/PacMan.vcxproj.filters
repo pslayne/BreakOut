@@ -33,12 +33,6 @@
     <ClCompile Include="Home.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Level1.cpp">
-      <Filter>Game\Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Level2.cpp">
-      <Filter>Game\Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>Engine\Arquivos de Origem</Filter>
     </ClCompile>

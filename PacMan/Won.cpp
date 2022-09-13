@@ -1,6 +1,6 @@
 #include "Engine.h"
 #include "Won.h"
-#include "Breakout.h"
+#include "Home.h"
 
 // ------------------------------------------------------------------------------
 
@@ -31,9 +31,9 @@ void Won::Update()
         ctrlKeyESC = true;
     }
 
-    // volta pra Won com ENTER
-    if (window->KeyDown(VK_RETURN))
-        Engine::Next<Won>();
+    // volta pra Home
+    if (window->KeyDown('H'))
+        Engine::Next<Home>();
 }
 
 // ------------------------------------------------------------------------------

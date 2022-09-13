@@ -93,6 +93,11 @@ uint Scene::Size()
     return uint(moving.size() + statics.size());
 }
 
+uint Scene::SizeStatics()
+{
+    return uint(statics.size());
+}
+
 // ---------------------------------------------------------------------------------
 
 void Scene::ProcessDeleted()

@@ -38,6 +38,7 @@ private:
 
 public:
     static Scene * scene;               // cena do jogo
+    static bool lost;
 
     void Init();                        // inicialização
     void Update();                      // atualização

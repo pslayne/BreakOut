@@ -1,6 +1,6 @@
 #include "Engine.h"
 #include "Lost.h"
-#include "Breakout.h"
+#include "Home.h"
 
 // ------------------------------------------------------------------------------
 
@@ -31,9 +31,9 @@ void Lost::Update()
         ctrlKeyESC = true;
     }
 
-    // volta pra Lost com ENTER
-    if (window->KeyDown(VK_RETURN))
-        Engine::Next<Lost>();
+    // volta pra Home
+    if (window->KeyDown('H'))
+        Engine::Next<Home>();
 }
 
 // ------------------------------------------------------------------------------

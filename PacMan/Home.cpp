@@ -42,7 +42,7 @@ void Home::Update()
         ctrlKeyESC = true;
     }
 
-    // passa ao primeiro nível com ESPAÇO
+    // passa ao primeiro nível com ENTER
     if (window->KeyDown(VK_SPACE))
         Engine::Next<Breakout>();
 }

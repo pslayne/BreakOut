@@ -22,6 +22,7 @@
 // Inicialização de membros estáticos da classe
 
 Scene * Breakout::scene = nullptr;
+bool Breakout::lost = false;
 
 // ------------------------------------------------------------------------------
 
@@ -49,15 +50,18 @@ void Breakout::Init()
 
     float line = 50.0f;
     float column = -320.0f;
+
+    int n_lines = 1;
+    int n_columns = 9;
     
 
     // -----------------------------------------
-    // linha de blocos    
+    // adicionando os blocos   
 
     Block* block;
 
-    for (int i = 0; i < 6; i++) {
-        for (int j = 0; j < 9; j++) {
+    for (int i = 0; i < n_lines; i++) {
+        for (int j = 0; j < n_columns; j++) {
             block = new Block();
             block->MoveTo(window->CenterX() + column, line);
             scene->Add(block, STATIC);
@@ -102,6 +106,10 @@ void Breakout::Update()
 
     // atualiza objetos da cena
     scene->Update();
+
+    //checa se acabaram os blocos
+    if(scene->Size() == (uint)2)
+        Engine::Next<Won>();
 
     // detecção e resolução de colisão
     scene->CollisionDetection();

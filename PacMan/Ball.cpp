@@ -57,8 +57,21 @@ void Ball::OnCollision(Object * obj)
         else if (block->color == Color::yellow) block->color = Color::green;
         else Breakout::scene->Delete(obj, STATIC);
 
-        velX *= -1;
-        velY *= -1;
+        Rect* bbBlock = (Rect*) block->BBox();
+        Circle* bbBall = (Circle*) BBox();
+
+        if ((bbBall->CenterX() > bbBlock->Left() && bbBall->CenterX() < bbBlock->Right())
+            && (bbBall->CenterY() >= bbBlock->Bottom() || bbBall->CenterY() <= bbBlock->Top())) {
+            velY = -velY;
+        }
+        else if ((bbBall->CenterY() > bbBlock->Top() && bbBall->CenterY() < bbBlock->Bottom())
+            && (bbBall->CenterX() >= bbBlock->Right() || bbBall->CenterX() <= bbBlock->Left())) {
+            velX = -velX;
+        }
+        else {
+            velY = -velY;
+            velX = -velX;
+        }
     }
 
     // experimente deixar o bloco cair em vez de removê-lo da cena

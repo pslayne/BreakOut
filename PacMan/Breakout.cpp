@@ -29,7 +29,7 @@ void Breakout::Init()
     scene = new Scene();
 
     // carrega background
-    backg = new Sprite("Resources/Background.jpg");
+    backg = new Sprite("Resources/Background.png");
     
     // ---------------------------
     // cria jogador

@@ -39,28 +39,12 @@ private:
 public:
     static Scene * scene;               // cena do jogo
     static bool lost;
+    static Image * imgList[6];
 
     void Init();                        // inicialização
     void Update();                      // atualização
     void Draw();                        // desenho
     void Finalize();                    // finalização
-
-    /*const Image* grayTile = new Image("Resources/Tile1.png");
-    const Image* redTile = new Image("Resources/Tile2.png");
-    const Image* purpleTile = new Image("Resources/Tile3.png");
-    const Image* blueTile = new Image("Resources/Tile4.png");
-    const Image* yellowTile = new Image("Resources/Tile5.png");
-    const Image* greenTile = new Image("Resources/Tile6.png");
-
-    Image* grayTile();
-    Image* redTile();
-    Image* purpleTile();
-    Image* blueTile();
-    Image* yellowTile();
-    Image* greenTile();*/
 };
-
-//inline Image* Breakout::grayTile() { return grayTile; }
-
 
 // ------------------------------------------------------------------------------

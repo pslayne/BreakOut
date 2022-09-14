@@ -26,16 +26,19 @@ enum Color { blue, gray, green, purple, red, yellow };
 class Block : public Object
 {
 public:
-    float velX;                 // velocidade horizontal
-    float velY;                 // velocidade vertical
+    float velX;                     // velocidade horizontal
+    float velY;                     // velocidade vertical
+    Color color;                    // cor do bloco
+    bool spriteChange;              // sprite do bloco vai ser alterado
 
-    Block(Color co);                    // construtor
-    ~Block();                   // destrutor
+    Block(Color co);                // construtor
+    ~Block();                       // destrutor
 
-    void Update();              // atualização do objeto
-    void Draw();                // desenho do objeto
+    static Image** imgList;         // lista com as Images carregadas
 
-    Color color;
+    void OnCollision(Object* obj);  // tratamento de colisão
+    void Update();                  // atualização do objeto
+    void Draw();                    // desenho do objeto 
 };
 
 inline void Block::Draw()

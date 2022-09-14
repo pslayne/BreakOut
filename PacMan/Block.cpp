@@ -12,14 +12,7 @@
 #include "Block.h"
 #include "Breakout.h"
 
-char imgBlokList[6][19] = {
-        "Resources/BBlu.png",
-        "Resources/BGra.png",
-        "Resources/BGre.png",
-        "Resources/BPur.png",
-        "Resources/BRed.png",
-        "Resources/BYel.png"
-};
+Image** Block::imgList = nullptr;
 
 // ---------------------------------------------------------------------------------
 Block::Block(Color co) {
@@ -28,13 +21,14 @@ Block::Block(Color co) {
 
     // tipo do objeto
     type = BLOCK;
+    spriteChange = false;
 
     // velocidades sempre nulas
     velX = 0.0f;
     velY = 0.0f;
 
     // sprite do bloco
-    Img(new Sprite(imgBlokList[co]));
+    Img(new Sprite(Block::imgList[co]));
     
     // cor do bloco
     color = co;
@@ -54,7 +48,13 @@ Block::~Block()
 void Block::Update()
 {
     // desloca o bloco
-    Translate(velX * gameTime, velY * gameTime);
+    //Translate(velX * gameTime, velY * gameTime);
+
+    // altera a Spite
+    if (spriteChange) {
+        Img(new Sprite(Block::imgList[color]));
+        spriteChange = false;
+    }
 
     // destrói ao sair da janela
     if (y > window->Height())
@@ -62,3 +62,20 @@ void Block::Update()
 }
 
 // ---------------------------------------------------------------------------------
+
+void Block::OnCollision(Object * obj)
+{
+    if (obj->Type() == BALL)
+    {
+        switch (color) {
+            case Color::gray:   color = Color::red;     break;
+            case Color::red:    color = Color::purple;  break;
+            case Color::purple: color = Color::blue;    break;
+            case Color::blue:   color = Color::yellow;  break;
+            case Color::yellow: color = Color::green;   break;
+            case Color::green:  Breakout::scene->Delete(this, STATIC);
+        }
+
+        spriteChange = true;
+    }
+}

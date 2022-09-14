@@ -24,6 +24,7 @@
 
 Scene * Breakout::scene = nullptr;
 bool Breakout::lost = false;
+Image * Breakout::imgList[6];
 
 // ------------------------------------------------------------------------------
 
@@ -47,6 +48,17 @@ void Breakout::Init()
     scene->Add(ball, MOVING);
 
     // -----------------------------------------
+    // carregando imgs dos blocos
+    Breakout::imgList[0] = new Image("Resources/BBlu.png");
+    Breakout::imgList[1] = new Image("Resources/BGra.png");
+    Breakout::imgList[2] = new Image("Resources/BGre.png");
+    Breakout::imgList[3] = new Image("Resources/BPur.png");
+    Breakout::imgList[4] = new Image("Resources/BRed.png");
+    Breakout::imgList[5] = new Image("Resources/BYel.png");
+
+    Block::imgList = Breakout::imgList;
+
+    // -----------------------------------------
     // posição dos blocos
     float line = 50.0f;
     float column = -320.0f;
@@ -58,7 +70,7 @@ void Breakout::Init()
 
     // adicionando os blocos
     int n_lines = 1;
-    int n_columns = 9;
+    int n_columns = 2;
     Block* block;
     for (int i = 0; i < n_lines; i++) {
         for (int j = 0; j < n_columns; j++) {
@@ -141,6 +153,10 @@ void Breakout::Draw()
 
 void Breakout::Finalize()
 {
+    // apaga as imgs
+    for (int i = 0; i < 6; i++)
+        delete Breakout::imgList[i];
+
     // apaga sprite
     delete backg;
 

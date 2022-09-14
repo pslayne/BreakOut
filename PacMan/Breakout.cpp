@@ -117,12 +117,12 @@ void Breakout::Update()
     // atualiza objetos da cena
     scene->Update();
 
-    //checa se acabaram os blocos
-    if(scene->Size() == (uint)2)
-        Engine::Next<Won>();
-
     // detecção e resolução de colisáo
     scene->CollisionDetection();
+
+    //checa se acabaram os blocos
+    if (scene->Size() == (uint)2)
+        Engine::Next<Won>();
 
     if (window->KeyDown(VK_RETURN))
         Engine::Next<Lost>();

@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Breakout (C�digo Fonte)
+// Breakout (Cádigo Fonte)
 // 
-// Cria��o:     26 Mar 2012
-// Atualiza��o: 20 Ago 2021
+// Criação:     26 Mar 2012
+// Atualização: 20 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descri��o:   Uso da classe Scene para gerenciar objetos e tratar colis�o
+// Descrição:   Uso da classe Scene para gerenciar objetos e tratar colisáo
 //
 **********************************************************************************/
 
@@ -17,12 +17,14 @@
 #include "Ball.h"
 #include "Lost.h"
 #include "Won.h"
+#include <random>
 
 // ------------------------------------------------------------------------------
-// Inicializa��o de membros est�ticos da classe
+// Inicialização de membros estáticos da classe
 
 Scene * Breakout::scene = nullptr;
 bool Breakout::lost = false;
+Image * Breakout::imgList[6];
 
 // ------------------------------------------------------------------------------
 
@@ -46,29 +48,37 @@ void Breakout::Init()
     scene->Add(ball, MOVING);
 
     // -----------------------------------------
-    // posi��o dos blocos
+    // carregando imgs dos blocos
+    Breakout::imgList[0] = new Image("Resources/BBlu.png");
+    Breakout::imgList[1] = new Image("Resources/BGra.png");
+    Breakout::imgList[2] = new Image("Resources/BGre.png");
+    Breakout::imgList[3] = new Image("Resources/BPur.png");
+    Breakout::imgList[4] = new Image("Resources/BRed.png");
+    Breakout::imgList[5] = new Image("Resources/BYel.png");
 
-    float line = 50.0f;
-    float column = -320.0f;
-
-    int n_lines = 1;
-    int n_columns = 9;
-    
+    Block::imgList = Breakout::imgList;
 
     // -----------------------------------------
-    // adicionando os blocos   
+    // posição dos blocos
+    float line = 50.0f;
+    float column = -320.0f;
+    
+    // gerando semente para criação dos dos blocos
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, 5);
 
+    // adicionando os blocos
+    int n_lines = 1;
+    int n_columns = 2;
     Block* block;
-
     for (int i = 0; i < n_lines; i++) {
         for (int j = 0; j < n_columns; j++) {
-            block = new Block();
+            block = new Block((Color)dist(gen));
             block->MoveTo(window->CenterX() + column, line);
             scene->Add(block, STATIC);
-
             column += 80;
         }
-
         line += 30.0f;
         column = -320.0f;
     }
@@ -82,7 +92,7 @@ void Breakout::Update()
     if (window->KeyDown(VK_ESCAPE))
         window->Close();
     
-    // habilita/desabilita visualiza��o de sprites
+    // habilita/desabilita visualização de sprites
     if (ctrlKeyS && window->KeyDown('S'))
     {
         viewScene = !viewScene;
@@ -93,7 +103,7 @@ void Breakout::Update()
         ctrlKeyS = true;
     }    
 
-    // habilita/desabilita visualiza��o da bounding box
+    // habilita/desabilita visualização da bounding box
     if (ctrlKeyB && window->KeyDown('B'))
     {
         viewBBox = !viewBBox;
@@ -111,7 +121,7 @@ void Breakout::Update()
     if(scene->Size() == (uint)2)
         Engine::Next<Won>();
 
-    // detec��o e resolu��o de colis�o
+    // detecção e resolução de colisáo
     scene->CollisionDetection();
 
     if (window->KeyDown(VK_RETURN))
@@ -143,18 +153,14 @@ void Breakout::Draw()
 
 void Breakout::Finalize()
 {
+    // apaga as imgs
+    for (int i = 0; i < 6; i++)
+        delete Breakout::imgList[i];
+
     // apaga sprite
     delete backg;
 
     //apaga a cena
     delete scene;
-
-    //apaga as imagens
-    /*delete grayTile;
-    delete redTile;
-    delete purpleTile;
-    delete blueTile;
-    delete yellowTile;
-    delete greenTile;*/
 }
 

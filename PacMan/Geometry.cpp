@@ -111,20 +111,16 @@ Line::Line(Point& pa, Point& pb)
 Rect::Rect()
 {
     // cria retângulo de (0,0) até (0,0)
-    left = right  = 0.0f;
-    top  = bottom = 0.0f;
+    width = height = 0.0f;
     type = RECTANGLE_T;
 }
 
 // --------------------------------------------------------------------------
 
-Rect::Rect(float x1, float y1, float x2, float y2)
+Rect::Rect(float nheight, float nwidth)
 {
-    // cria retângulo
-    left   = x1;
-    top    = y1;
-    right  = x2; 
-    bottom = y2;
+    height = nheight;
+    width = nwidth;
     type   = RECTANGLE_T;
 }
 
@@ -132,10 +128,8 @@ Rect::Rect(float x1, float y1, float x2, float y2)
 Rect::Rect(Point& a, Point& b)
 {
     // cria retângulo
-    left   = a.X();
-    top    = a.Y();
-    right  = b.X(); 
-    bottom = b.Y();
+    height = b.X() - a.X();
+    width = b.Y() - a.Y();
     type   = RECTANGLE_T;
 }
 

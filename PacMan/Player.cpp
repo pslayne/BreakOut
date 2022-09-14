@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Player (Arquivo de Cabeçalho)
+// Player (Arquivo de Cabeï¿½alho)
 // 
-// Criação:     22 Dez 2012
-// Atualização: 20 Ago 2021
+// Criaï¿½ï¿½o:     22 Dez 2012
+// Atualizaï¿½ï¿½o: 20 Ago 2021
 // Compilador:  Visual C++ 14
 //
-// Descrição:   Player do jogo Breakout
+// Descriï¿½ï¿½o:   Player do jogo Breakout
 //
 **********************************************************************************/
 
@@ -17,10 +17,10 @@
 
 Player::Player() {
     // sprite do jogador
-    sprite = new Sprite("Resources/Player.png");
+    Img(new Sprite("Resources/Player.png"));
 
     //bounding box
-    BBox(new Rect(-sprite->Width()/2, -sprite->Height() / 2, sprite->Width() / 2, sprite->Height() / 2));
+    BBox(new Rect(Width(), Height()));
 
     // centraliza o jogador
     MoveTo(window->CenterX(), 
@@ -42,7 +42,7 @@ Player::Player() {
 
 Player::~Player()
 {
-    delete sprite;
+
 }
 
 // ---------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-    // inicia o jogo com barra de espaço
+    // inicia o jogo com barra de espaï¿½o
     if (state == STOPED && window->KeyDown(VK_SPACE))
         state = PLAYING;
 
@@ -72,11 +72,11 @@ void Player::Update()
     if (window->KeyDown(VK_LEFT))
         Translate(-vel * gameTime, 0);
 
-    // mantém jogador dentro da janela (tam. da barra: 100x20)
-    if (x - sprite->Width() / 2 < 0)
-        MoveTo(sprite->Width() / 2, y);
-    if (x + sprite->Width() / 2 > window->Width())
-        MoveTo(window->Width() - sprite->Width() / 2, y);
+    // mantï¿½m jogador dentro da janela (tam. da barra: 100x20)
+    if (x - Img()->Width() / 2 < 0)
+        MoveTo(Img()->Width() / 2, y);
+    if (x + Img()->Width() / 2 > window->Width())
+        MoveTo(window->Width() - Img()->Width() / 2, y);
 }
 
 // ---------------------------------------------------------------------------------

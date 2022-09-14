@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Ball (Arquivo de Cabeçalho)
+// Ball (Arquivo de Cabeï¿½alho)
 // 
-// Criação:     22 Dez 2012
-// Atualização: 02 Set 2021
+// Criaï¿½ï¿½o:     22 Dez 2012
+// Atualizaï¿½ï¿½o: 02 Set 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Bola do jogo Breakout
+// Descriï¿½ï¿½o:   Bola do jogo Breakout
 //
 **********************************************************************************/
 
@@ -24,7 +24,7 @@ Ball::Ball(Player * p)
     sprite  = new Sprite("Resources/Ball.png");
     BBox(new Circle(sprite->Height()/2));
 
-    // tamanho do player é 100x20
+    // tamanho do player ï¿½ 100x20
     MoveTo(player->X(), player->Y() - 17, Layer::FRONT);
 
     // velocidades iniciais
@@ -48,33 +48,14 @@ void Ball::OnCollision(Object * obj)
 {
     // bola colide com bloco
     if (obj->Type() == BLOCK) {
-        Block* block = (Block*)obj;
-
-        if (block->color == Color::gray) block->color = Color::red;
-        else if (block->color == Color::red) block->color = Color::purple;
-        else if (block->color == Color::purple) block->color = Color::blue;
-        else if (block->color == Color::blue) block->color = Color::yellow;
-        else if (block->color == Color::yellow) block->color = Color::green;
-        else Breakout::scene->Delete(obj, STATIC);
-
-        Rect* bbBlock = (Rect*) block->BBox();
-        Circle* bbBall = (Circle*) BBox();
-
-        if ((bbBall->CenterX() > bbBlock->Left() && bbBall->CenterX() < bbBlock->Right())
-            && (bbBall->CenterY() >= bbBlock->Bottom() || bbBall->CenterY() <= bbBlock->Top())) {
-            velY = -velY;
-        }
-        else if ((bbBall->CenterY() > bbBlock->Top() && bbBall->CenterY() < bbBlock->Bottom())
-            && (bbBall->CenterX() >= bbBlock->Right() || bbBall->CenterX() <= bbBlock->Left())) {
+        Rect* box = (Rect*) obj->BBox();
+        if (x < box->Left() || x > box->Right())
             velX = -velX;
-        }
-        else {
+        if (y < box->Top() || y > box->Bottom())
             velY = -velY;
-            velX = -velX;
-        }
     }
 
-    // experimente deixar o bloco cair em vez de removê-lo da cena
+    // experimente deixar o bloco cair em vez de removï¿½-lo da cena
         //((Block*) obj)->velY = 200.0f;
 }
 
@@ -86,18 +67,16 @@ void Ball::Update()
     {
         Translate(velX * gameTime, velY * gameTime);
 
-        // se o jogador não rebater, a bola é reiniciada
-        //if (y + sprite->Height() > window->Height())
-        //    player->state = STOPED;
+        if (y + sprite->Height() > window->Height())
+            player->state = STOPED;
     }
     else
     {
-        // mova para posição acima do player e o acompanhe
+        // mova para posiï¿½ï¿½o acima do player e o acompanhe
         MoveTo(player->X(), player->Y() - 17, Layer::FRONT);
     }
-        
 
-    // mantém a bola dentro da tela (tam. da bola: 12x12)
+    // mantï¿½m a bola dentro da tela (tam. da bola: 12x12)
     if (x < 0)
     {
         MoveTo(0.0f, y);
@@ -115,10 +94,8 @@ void Ball::Update()
     }
     if (y + sprite->Height() > window->Height())
     {
-        /*MoveTo(x, float(window->Height() - sprite->Height()));
-        velY = -velY;*/
-
-
+        MoveTo(x, float(window->Height() - sprite->Height()));
+        velY = -velY;
     }
 }
 

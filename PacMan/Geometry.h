@@ -97,19 +97,17 @@ public:
 class Rect : public Geometry
 {
 public:
-    float left;                                     // coordenada esquerda do retângulo
-    float top;                                      // coordenada superior do retângulo
-    float right;                                    // coordenada direita do retângulo
-    float bottom;                                   // coordenada inferior do retângulo
+    float height;                                   // largura da imagem
+    float width;                                    // altura da imagem
 
     Rect();                                         // construtor padrão
-    Rect(float x1, float y1, float x2, float y2);   // construtor usando pontos-flutuantes
+    Rect(float nwidth, float nheight);                // construtor usando altura e largura
     Rect(Point& a, Point& b);                       // construtor usando pontos
 
-    float Left() const   { return x + left; }       // coordenadas do mundo do menor valor do eixo x
-    float Top() const    { return y + top; }        // coordenadas do mundo do menor valor do eixo y
-    float Right() const  { return x + right; }      // coordenadas do mundo do maior valor do eixo x
-    float Bottom() const { return y + bottom; }     // coordenadas do mundo do maior valor do eixo y
+    float Left() const   { return x - height/2; }       // coordenadas do mundo do menor valor do eixo x
+    float Top() const    { return y - width/2; }        // coordenadas do mundo do menor valor do eixo y
+    float Right() const  { return x + height/2; }      // coordenadas do mundo do maior valor do eixo x
+    float Bottom() const { return y + width/2; }     // coordenadas do mundo do maior valor do eixo y
 };
 
 // --------------------------------------------------------------------------

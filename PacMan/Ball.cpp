@@ -94,8 +94,10 @@ void Ball::Update()
     }
     if (y + sprite->Height() > window->Height())
     {
-        MoveTo(x, float(window->Height() - sprite->Height()));
-        velY = -velY;
+        /*MoveTo(x, float(window->Height() - sprite->Height()));
+        velY = -velY;*/
+
+        Breakout::lost = true;
     }
 }
 

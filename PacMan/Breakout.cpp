@@ -121,14 +121,11 @@ void Breakout::Update()
     scene->CollisionDetection();
 
     //checa se acabaram os blocos
-    if (scene->Size() == (uint)2)
+    if (window->KeyDown('W') || scene->Size() == (uint)2)
         Engine::Next<Won>();
 
-    if (window->KeyDown(VK_RETURN))
+    if (window->KeyDown(VK_RETURN) || lost)
         Engine::Next<Lost>();
-
-    if (window->KeyDown('W'))
-        Engine::Next<Won>();
 } 
 
 // ------------------------------------------------------------------------------

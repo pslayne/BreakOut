@@ -69,8 +69,8 @@ void Breakout::Init()
     std::uniform_int_distribution<> dist(0, 5);
 
     // adicionando os blocos
-    int n_lines = 1;
-    int n_columns = 2;
+    int n_lines = 6;
+    int n_columns = 9;
     Block* block;
     for (int i = 0; i < n_lines; i++) {
         for (int j = 0; j < n_columns; j++) {

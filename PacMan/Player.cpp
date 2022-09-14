@@ -62,9 +62,15 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-    // inicia o jogo com barra de espa�o
-    if (state == STOPED && window->KeyDown(VK_SPACE))
+    if (ctrlKey && window->KeyDown(VK_SPACE))
+    {   
         state = PLAYING;
+        ctrlKey = false;
+    }
+    else if (window->KeyUp(VK_SPACE))
+    {
+        ctrlKey = true;
+    }
 
     // desloca jogador horizontalmente
     if (window->KeyDown(VK_RIGHT))

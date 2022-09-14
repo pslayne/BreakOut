@@ -40,6 +40,8 @@ public:
     void OnCollision(Object * obj);     // tratamento de colisão
     void Update();                      // atualização do objeto
     void Draw();                        // desenho do objeto
+
+    bool ctrlKey = false;
 };
 
 // ---------------------------------------------------------------------------------

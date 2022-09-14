@@ -146,12 +146,6 @@
     <ClInclude Include="Home.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Level1.h">
-      <Filter>Game\Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Level2.h">
-      <Filter>Game\Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Lost.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>

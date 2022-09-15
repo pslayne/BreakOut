@@ -80,9 +80,9 @@ void Player::Update()
 
     // mant�m jogador dentro da janela (tam. da barra: 100x20)
     if (x - Img()->Width() / 2 < 0)
-        MoveTo(Img()->Width() / 2, y);
+        MoveTo((float)Img()->Width() / 2, y);
     if (x + Img()->Width() / 2 > window->Width())
-        MoveTo(window->Width() - Img()->Width() / 2, y);
+        MoveTo((float)window->Width() - Img()->Width() / 2, y);
 }
 
 // ---------------------------------------------------------------------------------

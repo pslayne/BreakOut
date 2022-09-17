@@ -45,6 +45,7 @@ void Home::Update()
     // passa ao primeiro nível com ENTER
     if (window->KeyDown(VK_SPACE)) {
         Breakout::lost = false;
+        Breakout::lives = 3;
         Engine::Next<Breakout>();
     }
 }

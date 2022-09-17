@@ -92,7 +92,7 @@ void Ball::Update()
         MoveTo(player->X(), player->Y() - 17, Layer::FRONT);
     }
 
-    // mant�m a bola dentro da tela (tam. da bola: 12x12)
+    // mantem a bola dentro da tela
     if (x - sprite->Width()/2 < 0)
     {
         MoveTo(float(sprite->Width() / 2), y);
@@ -108,13 +108,19 @@ void Ball::Update()
         MoveTo(x, float(sprite->Height() / 2));
         velY = -velY;
     }
+
+    //verifica se a bola caiu
     if (y + sprite->Height() /* / 2*/ > window->Height())
     {
         /*MoveTo(x, float(window->Height() - sprite->Height() / 2));
         velY = -velY;*/
 
-        Breakout::scene->Delete();
-        Breakout::lost = true;
+        if (Breakout::lives > 1) 
+            Breakout::lives -= 1;
+        else {
+            Breakout::scene->Delete();
+            Breakout::lost = true;
+        }
     }
 
     stringstream text;            // fluxo de texto para mensagens

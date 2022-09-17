@@ -50,11 +50,12 @@ Player::~Player()
 void Player::OnCollision(Object * obj)
 {
     // bola colidiu com o player
-    if (obj->Type() == BALL)
-    {
+    if (obj->Type() == BALL) {
+        //Rect* player = (Rect*)BBox();
         Ball * ball = (Ball*) obj;
-        ball->MoveTo(ball->X(), y - 17);
+
         ball->velY = -ball->velY;
+        ball->MoveTo(ball->X(), y - 17);
     }    
 }
 

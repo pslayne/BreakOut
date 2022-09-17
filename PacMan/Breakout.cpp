@@ -23,8 +23,10 @@
 // Inicialização de membros estáticos da classe
 
 Scene * Breakout::scene = nullptr;
-bool Breakout::lost = false;
 Image * Breakout::imgList[6];
+
+bool Breakout::lost = false;
+int Breakout::lives = 3;
 
 // ------------------------------------------------------------------------------
 
@@ -60,7 +62,7 @@ void Breakout::Init()
 
     // -----------------------------------------
     // posição dos blocos
-    float line = 50.0f;
+    float line = 80.0f;
     float column = -320.0f;
     
     // gerando semente para criação dos dos blocos
@@ -82,6 +84,12 @@ void Breakout::Init()
         line += 30.0f;
         column = -320.0f;
     }
+
+    heart = new Image("Resources/life.png");
+
+    for (int i = 0; i < lives; i++) 
+        life[i] = new Sprite(heart);
+    
 }
 
 // ------------------------------------------------------------------------------
@@ -136,6 +144,14 @@ void Breakout::Draw()
     if (viewScene)
     {
         backg->Draw(window->CenterX(), window->CenterY(), Layer::BACK);
+
+        float x = 850.0f;
+        float y = 40.0f;
+        for (int i = 0; i < lives; i++) {
+            life[i]->Draw(x, y, Layer::FRONT);
+            x += life[i]->Width() + 10;
+        }
+
         scene->Draw();
     }
 
@@ -153,6 +169,11 @@ void Breakout::Finalize()
     // apaga as imgs
     for (int i = 0; i < 6; i++)
         delete Breakout::imgList[i];
+
+    delete heart;
+
+    for (int i = 0; i < 3; i++)
+        delete life[i];
 
     // apaga sprite
     delete backg;

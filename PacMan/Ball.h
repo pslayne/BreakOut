@@ -31,6 +31,7 @@ private:
 public:
     float velX;                         // velocidade horizontal
     float velY;                         // velocidade vertical    
+    float velTax;                       //taxa de atualização da velocidade
 
     Ball(Player * p);                   // construtor
     ~Ball();                            // destrutor

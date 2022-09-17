@@ -12,6 +12,11 @@
 #include "Ball.h"
 #include "Block.h"
 #include "Breakout.h"
+#include <cmath>
+using std::abs;
+#include <sstream>
+using std::stringstream;
+
 
 // ---------------------------------------------------------------------------------
 
@@ -28,8 +33,11 @@ Ball::Ball(Player * p)
     MoveTo(player->X(), player->Y() - 17, Layer::FRONT);
 
     // velocidades iniciais
-    velX = 300.0f;
-    velY = -300.0f;
+    velX = 100.0f;
+    velY = -100.0f;
+
+    // taxa de atualização de velocidade inicial
+    velTax = 1.03f;
 
     // tipo do objeto
     type = BALL;
@@ -49,10 +57,18 @@ void Ball::OnCollision(Object * obj)
     // bola colide com bloco
     if (obj->Type() == BLOCK) {
         Rect* box = (Rect*) obj->BBox();
+        
         if (x < box->Left() || x > box->Right())
             velX = -velX;
         if (y < box->Top() || y > box->Bottom())
             velY = -velY;
+
+        if (velTax != 1.01 && abs(velX) >= 200.0f) velTax = 1.01;
+        if (velTax != 1.005 && abs(velX) >= 350.0f) velTax = 1.005;
+        if (velTax != 1 && abs(velX) >= 400.0f) velTax = 1;
+
+        velX *= velTax;
+        velY *= velTax;
     }
 
     // experimente deixar o bloco cair em vez de remov�-lo da cena
@@ -77,28 +93,38 @@ void Ball::Update()
     }
 
     // mant�m a bola dentro da tela (tam. da bola: 12x12)
-    if (x < 0)
+    if (x - sprite->Width()/2 < 0)
     {
-        MoveTo(0.0f, y);
+        MoveTo(float(sprite->Width() / 2), y);
         velX = -velX;
     }
-    if (x + sprite->Width() > window->Width())
+    if (x + sprite->Width()/2 > window->Width())
     {
-        MoveTo(float(window->Width() - sprite->Width()), y);
+        MoveTo(float(window->Width() - sprite->Width() / 2), y);
         velX = -velX;
     }
-    if (y < 0)
+    if (y - sprite->Height() / 2 < 0)
     {
-        MoveTo(x, 0.0f);
+        MoveTo(x, float(sprite->Height() / 2));
         velY = -velY;
     }
-    if (y + sprite->Height() > window->Height())
+    if (y + sprite->Height() /* / 2*/ > window->Height())
     {
-        /*MoveTo(x, float(window->Height() - sprite->Height()));
+        /*MoveTo(x, float(window->Height() - sprite->Height() / 2));
         velY = -velY;*/
 
+        Breakout::scene->Delete();
         Breakout::lost = true;
     }
+
+    stringstream text;            // fluxo de texto para mensagens
+    text << std::fixed;           // sempre mostra a parte fracionária
+    text.precision(2);            // três casas depois da vírgula
+
+    text << window->Title().c_str() << "         "
+        << "vel = " << abs(velX);
+
+    SetWindowText(window->Id(), text.str().c_str());
 }
 
 // ---------------------------------------------------------------------------------

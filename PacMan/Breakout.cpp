@@ -69,7 +69,7 @@ void Breakout::Init()
     std::uniform_int_distribution<> dist(0, 5);
 
     // adicionando os blocos
-    int n_lines = 6;
+    int n_lines = 8;
     int n_columns = 9;
     Block* block;
     for (int i = 0; i < n_lines; i++) {
@@ -124,7 +124,7 @@ void Breakout::Update()
     if (window->KeyDown('W') || scene->Size() == (uint)2)
         Engine::Next<Won>();
 
-    if (window->KeyDown(VK_RETURN) || lost)
+    if (window->KeyDown('L') || lost)
         Engine::Next<Lost>();
 } 
 

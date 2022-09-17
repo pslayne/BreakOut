@@ -28,7 +28,7 @@ Player::Player() {
            Layer::FRONT);
 
     // velocidade do jogador
-    vel = 600; 
+    vel = 700; 
 
     // estado inicial do jogo
     state = STOPED;

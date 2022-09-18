@@ -118,7 +118,7 @@ void Breakout::Update()
     scene->Update();
 
     //checa se acabaram os blocos
-    if(scene->Size() == (uint)2)
+    if(scene->SizeStatics() == 0)
         Engine::Next<Won>();
 
     // detecção e resolução de colisáo

@@ -11,7 +11,7 @@
 
 #include "Engine.h"
 #include "Home.h"
-#include "Breakout.h"
+#include "Fase1.h"
 
 // ------------------------------------------------------------------------------
 
@@ -44,9 +44,7 @@ void Home::Update()
 
     // passa ao primeiro nível com ENTER
     if (window->KeyDown(VK_SPACE)) {
-        Breakout::lost = false;
-        Breakout::lives = 3;
-        Engine::Next<Breakout>();
+        Engine::Next<Fase1>();
     }
 }
 

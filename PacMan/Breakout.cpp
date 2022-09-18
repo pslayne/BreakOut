@@ -40,13 +40,13 @@ void Breakout::Init()
 
     // ---------------------------
     // cria jogador
-    Player *player = new Player();
+    Player* player = new Player();
     scene->Add(player, MOVING);
 
     // ---------------------------
     // cria bola
-
-    Ball *ball = new Ball(player);
+    
+    Ball* ball = new Ball(player);
     scene->Add(ball, MOVING);
 
     // -----------------------------------------
@@ -71,12 +71,10 @@ void Breakout::Init()
     std::uniform_int_distribution<> dist(0, 5);
 
     // adicionando os blocos
-    int n_lines = 8;
-    int n_columns = 9;
     Block *block;
-    for (int i = 0; i < n_lines; i++)
+    for (int i = 0; i < blockLines; i++)
     {
-        for (int j = 0; j < n_columns; j++)
+        for (int j = 0; j < blockColumns; j++)
         {
             block = new Block((Color)dist(gen));
             block->MoveTo(window->CenterX() + column, line);
@@ -102,25 +100,36 @@ void Breakout::Update()
         window->Close();
 
     // habilita/desabilita visualização de sprites
-    if (ctrlKeyS && window->KeyDown('S'))
+    if (ctrlKey['S'] && window->KeyDown('S'))
     {
         viewScene = !viewScene;
-        ctrlKeyS = false;
+        ctrlKey['S'] = false;
     }
     else if (window->KeyUp('S'))
     {
-        ctrlKeyS = true;
+        ctrlKey['S'] = true;
     }
 
     // habilita/desabilita visualização da bounding box
-    if (ctrlKeyB && window->KeyDown('B'))
+    if (ctrlKey['B'] && window->KeyDown('B'))
     {
         viewBBox = !viewBBox;
-        ctrlKeyB = false;
+        ctrlKey['B'] = false;
     }
     else if (window->KeyUp('B'))
     {
-        ctrlKeyB = true;
+        ctrlKey['B'] = true;
+    }
+
+    // passa para a próxima fase
+    if (ctrlKey['W'] && window->KeyDown('W'))
+    {
+        ctrlKey['W'] = false;
+    }
+    else if (window->KeyUp('W'))
+    {
+        ctrlKey['W'] = true;
+        NextFase();
     }
 
     // atualiza objetos da cena
@@ -130,8 +139,8 @@ void Breakout::Update()
     scene->CollisionDetection();
 
     // checa se acabaram os blocos
-    if (window->KeyDown('W') || scene->SizeStatics() == (uint)0)
-        Engine::Next<Won>();
+    if (scene->SizeStatics() == (uint)0)
+        NextFase();
 
     if (window->KeyDown('L') || lost)
         Engine::Next<Lost>();
@@ -182,4 +191,10 @@ void Breakout::Finalize()
 
     // apaga a cena
     delete scene;
+}
+
+// ------------------------------------------------------------------------------
+
+void Breakout::NextFase()
+{
 }

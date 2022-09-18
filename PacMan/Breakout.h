@@ -1,13 +1,16 @@
 /**********************************************************************************
-// Breakout (Arquivo de Cabeçalho)
+// Breakout (Arquivo de Cabeï¿½alho)
 //
-// Criação:     26 Mar 2012
-// Atualização: 20 Ago 2021
+// Criaï¿½ï¿½o:     26 Mar 2012
+// Atualizaï¿½ï¿½o: 20 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Uso da classe Scene para gerenciar objetos e tratar colisão
+// Descriï¿½ï¿½o:   Uso da classe Scene para gerenciar objetos e tratar colisï¿½o
 //
 **********************************************************************************/
+
+#ifndef _BREAKOUT_H_
+#define _BREAKOUT_H_
 
 #include "Game.h"
 #include "Sprite.h"
@@ -33,22 +36,30 @@ private:
 
     bool viewScene = true;              // visualiza sprites da cena
     bool viewBBox  = false;             // visualiza bounding box
-    bool ctrlKeyS  = true;              // controla pressionamento da tecla S
-    bool ctrlKeyB  = true;              // controla pressionamento da tecla B
+    bool ctrlKey[256] = {true};         // controla pressionamento das teclas
+
+protected:
+    int blockLines;                     // nÂº de linhas com blocos
+    int blockColumns;                   // nÂº de colunas com blocos
+    /*bool lost;                          
+    int lives; */                         // quant de vidas
+    virtual void NextFase();            // passa para a prÃ³xima fase
 
 public:
     static Scene * scene;               // cena do jogo
     static Image * imgList[6];
     Image * heart;
     Sprite* life[3];
-    
-    static bool lost;                   
-    static int lives;                   //nº de vidas
 
-    void Init();                        // inicialização
-    void Update();                      // atualização
+    static bool lost;
+    static int lives;
+
+    void Init();                        // inicializaï¿½ï¿½o
+    void Update();                      // atualizaï¿½ï¿½o
     void Draw();                        // desenho
-    void Finalize();                    // finalização
+    void Finalize();                    // finalizaï¿½ï¿½o
 };
 
 // ------------------------------------------------------------------------------
+
+#endif

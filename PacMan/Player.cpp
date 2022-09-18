@@ -28,7 +28,7 @@ Player::Player() {
            Layer::FRONT);
 
     // velocidade do jogador
-    vel = 600; 
+    vel = 700; 
 
     // estado inicial do jogo
     state = STOPED;
@@ -50,11 +50,12 @@ Player::~Player()
 void Player::OnCollision(Object * obj)
 {
     // bola colidiu com o player
-    if (obj->Type() == BALL)
-    {
+    if (obj->Type() == BALL) {
+        //Rect* player = (Rect*)BBox();
         Ball * ball = (Ball*) obj;
-        ball->MoveTo(ball->X(), y - 17);
+
         ball->velY = -ball->velY;
+        ball->MoveTo(ball->X(), y - 17);
     }    
 }
 
@@ -62,9 +63,15 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-    // inicia o jogo com barra de espa�o
-    if (state == STOPED && window->KeyDown(VK_SPACE))
+    if (ctrlKey && window->KeyDown(VK_SPACE))
+    {   
         state = PLAYING;
+        ctrlKey = false;
+    }
+    else if (window->KeyUp(VK_SPACE))
+    {
+        ctrlKey = true;
+    }
 
     // desloca jogador horizontalmente
     if (window->KeyDown(VK_RIGHT))
@@ -74,9 +81,9 @@ void Player::Update()
 
     // mant�m jogador dentro da janela (tam. da barra: 100x20)
     if (x - Img()->Width() / 2 < 0)
-        MoveTo(Img()->Width() / 2, y);
+        MoveTo((float)Img()->Width() / 2, y);
     if (x + Img()->Width() / 2 > window->Width())
-        MoveTo(window->Width() - Img()->Width() / 2, y);
+        MoveTo((float)window->Width() - Img()->Width() / 2, y);
 }
 
 // ---------------------------------------------------------------------------------

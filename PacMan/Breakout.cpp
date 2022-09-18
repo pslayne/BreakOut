@@ -1,6 +1,6 @@
 /**********************************************************************************
 // Breakout (Cádigo Fonte)
-// 
+//
 // Criação:     26 Mar 2012
 // Atualização: 20 Ago 2021
 // Compilador:  Visual C++ 2019
@@ -22,9 +22,11 @@
 // ------------------------------------------------------------------------------
 // Inicialização de membros estáticos da classe
 
-Scene * Breakout::scene = nullptr;
+Scene *Breakout::scene = nullptr;
+Image *Breakout::imgList[6];
+
 bool Breakout::lost = false;
-Image * Breakout::imgList[6];
+int Breakout::lives = 3;
 
 // ------------------------------------------------------------------------------
 
@@ -35,16 +37,16 @@ void Breakout::Init()
 
     // carrega background
     backg = new Sprite("Resources/Background.png");
-    
+
     // ---------------------------
     // cria jogador
-    Player * player = new Player();
+    Player *player = new Player();
     scene->Add(player, MOVING);
 
     // ---------------------------
     // cria bola
 
-    Ball * ball = new Ball(player);
+    Ball *ball = new Ball(player);
     scene->Add(ball, MOVING);
 
     // -----------------------------------------
@@ -60,20 +62,22 @@ void Breakout::Init()
 
     // -----------------------------------------
     // posição dos blocos
-    float line = 50.0f;
+    float line = 80.0f;
     float column = -320.0f;
-    
+
     // gerando semente para criação dos dos blocos
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist(0, 5);
 
     // adicionando os blocos
-    int n_lines = 1;
-    int n_columns = 2;
-    Block* block;
-    for (int i = 0; i < n_lines; i++) {
-        for (int j = 0; j < n_columns; j++) {
+    int n_lines = 8;
+    int n_columns = 9;
+    Block *block;
+    for (int i = 0; i < n_lines; i++)
+    {
+        for (int j = 0; j < n_columns; j++)
+        {
             block = new Block((Color)dist(gen));
             block->MoveTo(window->CenterX() + column, line);
             scene->Add(block, STATIC);
@@ -82,6 +86,11 @@ void Breakout::Init()
         line += 30.0f;
         column = -320.0f;
     }
+
+    heart = new Image("Resources/life.png");
+
+    for (int i = 0; i < lives; i++)
+        life[i] = new Sprite(heart);
 }
 
 // ------------------------------------------------------------------------------
@@ -91,7 +100,7 @@ void Breakout::Update()
     // sai com o pressionamento do ESC
     if (window->KeyDown(VK_ESCAPE))
         window->Close();
-    
+
     // habilita/desabilita visualização de sprites
     if (ctrlKeyS && window->KeyDown('S'))
     {
@@ -101,7 +110,7 @@ void Breakout::Update()
     else if (window->KeyUp('S'))
     {
         ctrlKeyS = true;
-    }    
+    }
 
     // habilita/desabilita visualização da bounding box
     if (ctrlKeyB && window->KeyDown('B'))
@@ -117,19 +126,16 @@ void Breakout::Update()
     // atualiza objetos da cena
     scene->Update();
 
-    //checa se acabaram os blocos
-    if(scene->SizeStatics() == 0)
-        Engine::Next<Won>();
-
     // detecção e resolução de colisáo
     scene->CollisionDetection();
 
-    if (window->KeyDown(VK_RETURN))
-        Engine::Next<Lost>();
-
-    if (window->KeyDown('W'))
+    // checa se acabaram os blocos
+    if (window->KeyDown('W') || scene->SizeStatics() == (uint)0)
         Engine::Next<Won>();
-} 
+
+    if (window->KeyDown('L') || lost)
+        Engine::Next<Lost>();
+}
 
 // ------------------------------------------------------------------------------
 
@@ -139,6 +145,15 @@ void Breakout::Draw()
     if (viewScene)
     {
         backg->Draw(window->CenterX(), window->CenterY(), Layer::BACK);
+
+        float x = 850.0f;
+        float y = 40.0f;
+        for (int i = 0; i < lives; i++)
+        {
+            life[i]->Draw(x, y, Layer::FRONT);
+            x += life[i]->Width() + 10;
+        }
+
         scene->Draw();
     }
 
@@ -147,7 +162,7 @@ void Breakout::Draw()
     {
         scene->DrawBBox();
     }
-} 
+}
 
 // ------------------------------------------------------------------------------
 
@@ -157,10 +172,14 @@ void Breakout::Finalize()
     for (int i = 0; i < 6; i++)
         delete Breakout::imgList[i];
 
+    delete heart;
+
+    for (int i = 0; i < 3; i++)
+        delete life[i];
+
     // apaga sprite
     delete backg;
 
-    //apaga a cena
+    // apaga a cena
     delete scene;
 }
-

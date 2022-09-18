@@ -38,8 +38,12 @@ private:
 
 public:
     static Scene * scene;               // cena do jogo
-    static bool lost;
     static Image * imgList[6];
+    Image * heart;
+    Sprite* life[3];
+    
+    static bool lost;                   
+    static int lives;                   //nº de vidas
 
     void Init();                        // inicialização
     void Update();                      // atualização

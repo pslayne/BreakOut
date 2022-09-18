@@ -15,6 +15,7 @@
 **********************************************************************************/
 
 #include "Engine.h"
+#include "Ball.h"
 #include <windows.h>
 #include <sstream>
 using std::stringstream;

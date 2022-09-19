@@ -63,16 +63,6 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-    if (ctrlKey && window->KeyDown(VK_SPACE))
-    {   
-        state = PLAYING;
-        ctrlKey = false;
-    }
-    else if (window->KeyUp(VK_SPACE))
-    {
-        ctrlKey = true;
-    }
-
     // desloca jogador horizontalmente
     if (window->KeyDown(VK_RIGHT))
         Translate(vel * gameTime, 0);

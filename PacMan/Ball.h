@@ -22,16 +22,20 @@
 
 // ---------------------------------------------------------------------------------
 
+enum PLAYERSTATE { PLAYING, STOPED };
+
 class Ball : public Object
 {
 private:
     Player * player;                    // ponteiro para jogador
     Sprite * sprite;                    // sprite da bola
+    uint state;                         // estado da bola
+    bool ctrlKey = true;                // ctrl de tecla
 
 public:
     float velX;                         // velocidade horizontal
     float velY;                         // velocidade vertical    
-    float velTax;                       //taxa de atualização da velocidade
+    float velTax;                       // taxa de atualização da velocidade
 
     Ball(Player * p);                   // construtor
     ~Ball();                            // destrutor

@@ -20,11 +20,6 @@
 #include "Sprite.h"                     // interface de Sprites
 
 // ---------------------------------------------------------------------------------
-// Constantes Globais
-
-enum PLAYERSTATE {PLAYING, STOPED};    
-
-// ---------------------------------------------------------------------------------
 
 class Player : public Object
 {

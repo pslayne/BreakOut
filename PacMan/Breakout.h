@@ -15,7 +15,11 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "Scene.h"
+#include "Player.h"
+#include "Ball.h"
 #include "Resources.h"
+#include <list>
+using std::list;
 
 // ------------------------------------------------------------------------------
 // Tipos dos objetos do jogo
@@ -33,26 +37,27 @@ class Breakout : public Game
 {
 private:
     Sprite * backg = nullptr;           // plano de fundo
+    Player* player;
 
     bool viewScene = true;              // visualiza sprites da cena
     bool viewBBox  = false;             // visualiza bounding box
     bool ctrlKey[256] = {true};         // controla pressionamento das teclas
 
 protected:
-    int blockLines;                     // nº de linhas com blocos
-    int blockColumns;                   // nº de colunas com blocos
-    /*bool lost;                          
-    int lives; */                         // quant de vidas
+    uint blockLines;                    // nº de linhas com blocos
+    uint blockColumns;                  // nº de colunas com blocos
+    uint maxBalls;                      // quant máxima de bolas
     virtual void NextFase();            // passa para a próxima fase
 
 public:
     static Scene * scene;               // cena do jogo
     static Image * imgList[6];
+    static uint lives;                  // quantidade de vidas
+    static uint numBalls;               // quantidade de bolas
     Image * heart;
     Sprite* life[3];
-
-    static bool lost;
-    static int lives;
+    
+    static void Lose();
 
     void Init();                        // inicializa��o
     void Update();                      // atualiza��o

@@ -14,7 +14,6 @@
 #include "Resources.h"
 #include "Player.h"
 #include "Block.h"
-#include "Ball.h"
 #include "Lost.h"
 #include "Won.h"
 #include <random>
@@ -24,9 +23,8 @@
 
 Scene *Breakout::scene = nullptr;
 Image *Breakout::imgList[6];
-
-bool Breakout::lost = false;
-int Breakout::lives = 3;
+uint Breakout::lives = 3;
+uint Breakout::numBalls;
 
 // ------------------------------------------------------------------------------
 
@@ -40,13 +38,14 @@ void Breakout::Init()
 
     // ---------------------------
     // cria jogador
-    Player* player = new Player();
+    player = new Player();
     scene->Add(player, MOVING);
 
     // ---------------------------
     // cria bola
-    
     Ball* ball = new Ball(player);
+    numBalls++;
+    //ballList.push_back(ball);
     scene->Add(ball, MOVING);
 
     // -----------------------------------------
@@ -72,9 +71,9 @@ void Breakout::Init()
 
     // adicionando os blocos
     Block *block;
-    for (int i = 0; i < blockLines; i++)
+    for (uint i = 0; i < blockLines; i++)
     {
-        for (int j = 0; j < blockColumns; j++)
+        for (uint j = 0; j < blockColumns; j++)
         {
             block = new Block((Color)dist(gen));
             block->MoveTo(window->CenterX() + column, line);
@@ -87,7 +86,7 @@ void Breakout::Init()
 
     heart = new Image("Resources/life.png");
 
-    for (int i = 0; i < lives; i++)
+    for (uint i = 0; i < lives; i++)
         life[i] = new Sprite(heart);
 }
 
@@ -124,12 +123,20 @@ void Breakout::Update()
     // passa para a próxima fase
     if (ctrlKey['W'] && window->KeyDown('W'))
     {
-        ctrlKey['W'] = false;
         NextFase();
+        ctrlKey['W'] = false;
     }
     else if (window->KeyUp('W'))
     {
         ctrlKey['W'] = true;
+    }
+
+    // checa se o jogador pode lançar mais bolas
+    if (numBalls < maxBalls)
+    {
+        Ball* newBall = new Ball(player);
+        scene->Add(newBall, MOVING);
+        numBalls++;
     }
 
     // atualiza objetos da cena
@@ -138,11 +145,15 @@ void Breakout::Update()
     // detecção e resolução de colisáo
     scene->CollisionDetection();
 
+    // checa se o jogador ainda possui vidas
+    if (lives < 1)
+        Engine::Next<Lost>();
+
     // checa se acabaram os blocos
     if (scene->SizeStatics() == (uint)0)
         NextFase();
 
-    if (window->KeyDown('L') || lost)
+    if (window->KeyDown('L'))
         Engine::Next<Lost>();
 }
 
@@ -157,7 +168,7 @@ void Breakout::Draw()
 
         float x = 850.0f;
         float y = 40.0f;
-        for (int i = 0; i < lives; i++)
+        for (uint i = 0; i < lives; i++)
         {
             life[i]->Draw(x, y, Layer::FRONT);
             x += life[i]->Width() + 10;
@@ -197,4 +208,10 @@ void Breakout::Finalize()
 
 void Breakout::NextFase()
 {
+}
+
+void Breakout::Lose()
+{
+    lives--;
+    numBalls--;
 }

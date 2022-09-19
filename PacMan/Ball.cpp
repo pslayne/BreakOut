@@ -25,6 +25,9 @@ Ball::Ball(Player * p)
     // guarda jogador
     player = p;
 
+    // bola parada
+    state = STOPED;
+
     // cria sprite da bola
     sprite  = new Sprite("Resources/Ball.png");
     BBox(new Circle(sprite->Height()/2));
@@ -63,9 +66,9 @@ void Ball::OnCollision(Object * obj)
         if (y < box->Top() || y > box->Bottom())
             velY = -velY;
 
-        if (velTax != 1.01 && abs(velX) >= 200.0f) velTax = 1.01;
-        if (velTax != 1.005 && abs(velX) >= 350.0f) velTax = 1.005;
-        if (velTax != 1 && abs(velX) >= 400.0f) velTax = 1;
+        if (velTax != 1.01 && abs(velX) >= 150.0f) velTax = 1.01;
+        if (velTax != 1.005 && abs(velX) >= 250.0f) velTax = 1.005;
+        if (velTax != 1 && abs(velX) >= 300.0f) velTax = 1;
 
         velX *= velTax;
         velY *= velTax;
@@ -79,12 +82,16 @@ void Ball::OnCollision(Object * obj)
 
 void Ball::Update()
 {
-    if (player->state == PLAYING)
+    // inicia movimento da bola
+    if (ctrlKey && window->KeyDown(VK_SPACE))
+    {
+        state = PLAYING;
+        ctrlKey = false;
+    }
+
+    if (state == PLAYING)
     {
         Translate(velX * gameTime, velY * gameTime);
-
-        if (y + sprite->Height() > window->Height())
-            player->state = STOPED;
     }
     else
     {
@@ -109,18 +116,11 @@ void Ball::Update()
         velY = -velY;
     }
 
-    //verifica se a bola caiu
-    if (y + sprite->Height() /* / 2*/ > window->Height())
+    // verifica se a bola caiu
+    if (y + sprite->Height() > window->Height())
     {
-        /*MoveTo(x, float(window->Height() - sprite->Height() / 2));
-        velY = -velY;*/
-
-        if (Breakout::lives > 1) 
-            Breakout::lives -= 1;
-        else {
-            Breakout::scene->Delete();
-            Breakout::lost = true;
-        }
+         Breakout::scene->Remove(this, MOVING);
+         Breakout::Lose();
     }
 
     stringstream text;            // fluxo de texto para mensagens

@@ -34,18 +34,17 @@ void Home::Update()
     // sai do jogo com a tecla ESC
     if (ctrlKeyESC && window->KeyDown(VK_ESCAPE))
     {
-        ctrlKeyESC = false;
         window->Close();
+        ctrlKeyESC = false;
     }
     else if (window->KeyUp(VK_ESCAPE))
     {
         ctrlKeyESC = true;
     }
 
-    // passa ao primeiro nível com ENTER
-    if (window->KeyDown(VK_SPACE)) {
+    // passa ao primeiro nível com SPACE
+    if (window->KeyDown(VK_SPACE))
         Engine::Next<Fase1>();
-    }
 }
 
 // ------------------------------------------------------------------------------

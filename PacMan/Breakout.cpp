@@ -125,11 +125,11 @@ void Breakout::Update()
     if (ctrlKey['W'] && window->KeyDown('W'))
     {
         ctrlKey['W'] = false;
+        NextFase();
     }
     else if (window->KeyUp('W'))
     {
         ctrlKey['W'] = true;
-        NextFase();
     }
 
     // atualiza objetos da cena

@@ -1,5 +1,5 @@
-#include "Engine.h"
 #include "Won.h"
+#include "Engine.h"
 #include "Home.h"
 
 // ------------------------------------------------------------------------------
@@ -31,9 +31,16 @@ void Won::Update()
         ctrlKeyESC = true;
     }
 
-    // volta pra Home
-    if (window->KeyDown('H'))
+    // voltar para Home
+    if (ctrlKeySPA && window->KeyDown(VK_SPACE))
+    {
         Engine::Next<Home>();
+        ctrlKeySPA = false;
+    }
+    else if (window->KeyUp(VK_SPACE))
+    {
+        ctrlKeySPA = true;
+    }
 }
 
 // ------------------------------------------------------------------------------

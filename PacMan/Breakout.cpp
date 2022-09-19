@@ -23,8 +23,7 @@
 
 Scene *Breakout::scene = nullptr;
 Image *Breakout::imgList[6];
-uint Breakout::lives = 3;
-uint Breakout::numBalls;
+uint Breakout::lives;
 
 // ------------------------------------------------------------------------------
 
@@ -43,9 +42,8 @@ void Breakout::Init()
 
     // ---------------------------
     // cria bola
+    Ball::maxBalls = maxBalls;
     Ball* ball = new Ball(player);
-    numBalls++;
-    //ballList.push_back(ball);
     scene->Add(ball, MOVING);
 
     // -----------------------------------------
@@ -131,29 +129,18 @@ void Breakout::Update()
         ctrlKey['W'] = true;
     }
 
-    // checa se o jogador pode lançar mais bolas
-    if (numBalls < maxBalls)
-    {
-        Ball* newBall = new Ball(player);
-        scene->Add(newBall, MOVING);
-        numBalls++;
-    }
-
     // atualiza objetos da cena
     scene->Update();
 
     // detecção e resolução de colisáo
     scene->CollisionDetection();
 
-    // checa se o jogador ainda possui vidas
-    if (lives < 1)
-        Engine::Next<Lost>();
-
     // checa se acabaram os blocos
     if (scene->SizeStatics() == (uint)0)
         NextFase();
 
-    if (window->KeyDown('L'))
+    // checa se o jogador ainda possui vidas
+    if (lives < 1 || window->KeyDown('L'))
         Engine::Next<Lost>();
 }
 
@@ -208,10 +195,4 @@ void Breakout::Finalize()
 
 void Breakout::NextFase()
 {
-}
-
-void Breakout::Lose()
-{
-    lives--;
-    numBalls--;
 }

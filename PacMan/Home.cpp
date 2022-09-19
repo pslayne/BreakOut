@@ -43,8 +43,15 @@ void Home::Update()
     }
 
     // passa ao primeiro nível com SPACE
-    if (window->KeyDown(VK_SPACE))
+    if (ctrlKeySPA && window->KeyDown(VK_SPACE))
+    {
         Engine::Next<Fase1>();
+        ctrlKeySPA = false;
+    }
+    else if (window->KeyUp(VK_SPACE))
+    {
+        ctrlKeySPA = true;
+    }
 }
 
 // ------------------------------------------------------------------------------

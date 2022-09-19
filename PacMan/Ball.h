@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Ball (Arquivo de Cabeçalho)
+// Ball (Arquivo de Cabeï¿½alho)
 // 
-// Criação:     22 Dez 2012
-// Atualização: 20 Ago 2021
+// Criaï¿½ï¿½o:     22 Dez 2012
+// Atualizaï¿½ï¿½o: 20 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Bola do jogo Breakout
+// Descriï¿½ï¿½o:   Bola do jogo Breakout
 //
 **********************************************************************************/
 
@@ -13,9 +13,9 @@
 #define _BREAKOUT_BALL_H_
 
 // ---------------------------------------------------------------------------------
-// Inclusões
+// Inclusï¿½es
 
-#include "Types.h"                      // tipos específicos da engine
+#include "Types.h"                      // tipos especï¿½ficos da engine
 #include "Object.h"                     // interface de Object
 #include "Sprite.h"                     // interface de Sprites
 #include "Player.h"                     // jogador do Breakout
@@ -30,20 +30,23 @@ private:
     Player * player;                    // ponteiro para jogador
     Sprite * sprite;                    // sprite da bola
     uint state;                         // estado da bola
-    bool ctrlKey = true;                // ctrl de tecla
+    bool ctrlKey = false;                // ctrl de tecla
 
 public:
     float velX;                         // velocidade horizontal
     float velY;                         // velocidade vertical    
-    float velTax;                       // taxa de atualização da velocidade
+    float velTax;                       // taxa de atualizaï¿½ï¿½o da velocidade
+
+    static uint numBalls;               // quantidade de bolas
+    static uint maxBalls;               // quant mï¿½xima de bolas
 
     Ball(Player * p);                   // construtor
     ~Ball();                            // destrutor
     float Width();                      // largura da bola
     float Height();                     // altura da bola
 
-    void OnCollision(Object * obj);     // tratamento de colisão
-    void Update();                      // atualização do objeto
+    void OnCollision(Object * obj);     // tratamento de colisï¿½o
+    void Update();                      // atualizaï¿½ï¿½o do objeto
     void Draw();                        // desenho do objeto
 };
 

@@ -12,8 +12,9 @@
 class Won : public Game
 {
 private:
-    Sprite* backg = nullptr;       // pano de fundo
+    Sprite* backg = nullptr;        // pano de fundo
     bool ctrlKeyESC = false;        // controle do ESC
+    bool ctrlKeySPA = false;        // controle do SPACE
 
 public:
     void Init();                    // inicialização

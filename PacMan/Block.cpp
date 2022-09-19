@@ -55,10 +55,6 @@ void Block::Update()
         Img(new Sprite(Block::imgList[color]));
         spriteChange = false;
     }
-
-    // destrói ao sair da janela
-    if (y > window->Height())
-        Breakout::scene->Delete();
 }
 
 // ---------------------------------------------------------------------------------

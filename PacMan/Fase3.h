@@ -7,8 +7,6 @@ class Fase3 : public Breakout
 public:
 	Fase3();
 	
-	void NextFase()
-	{
-		Engine::Next<Won>();
-	};   // passa para o próximo nível
+	void NextFase()					// passa para o próximo nível
+	{ Engine::Next<Won>(); };
 };

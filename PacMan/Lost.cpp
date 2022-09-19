@@ -32,8 +32,15 @@ void Lost::Update()
     }
 
     // volta pra Home
-    if (window->KeyDown('H'))
+    if (ctrlKeySPA && window->KeyDown(VK_SPACE))
+    {
         Engine::Next<Home>();
+        ctrlKeySPA = false;
+    }
+    else if (window->KeyUp(VK_SPACE))
+    {
+        ctrlKeySPA = true;
+    }
 }
 
 // ------------------------------------------------------------------------------

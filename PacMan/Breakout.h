@@ -46,18 +46,15 @@ private:
 protected:
     uint blockLines;                    // nº de linhas com blocos
     uint blockColumns;                  // nº de colunas com blocos
-    uint maxBalls;                      // quant máxima de bolas
+    uint maxBalls;                      // nº max de bolas
     virtual void NextFase();            // passa para a próxima fase
 
 public:
     static Scene * scene;               // cena do jogo
     static Image * imgList[6];
     static uint lives;                  // quantidade de vidas
-    static uint numBalls;               // quantidade de bolas
     Image * heart;
-    Sprite* life[3];
-    
-    static void Lose();
+    Sprite* life[5];
 
     void Init();                        // inicializa��o
     void Update();                      // atualiza��o

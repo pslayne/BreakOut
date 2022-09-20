@@ -14,6 +14,7 @@
 #include "Resources.h"
 #include "Player.h"
 #include "Block.h"
+#include "Heart.h"
 #include "Lost.h"
 #include "Won.h"
 #include <random>
@@ -21,8 +22,9 @@
 // ------------------------------------------------------------------------------
 // Inicialização de membros estáticos da classe
 
-Scene *Breakout::scene = nullptr;
-Image *Breakout::imgList[6];
+Scene* Breakout::scene = nullptr;
+Image* Breakout::imgBlockList[6];
+Image* Breakout::imgLife;
 uint Breakout::lives;
 
 // ------------------------------------------------------------------------------
@@ -47,17 +49,17 @@ void Breakout::Init()
     scene->Add(ball, MOVING);
 
     // -----------------------------------------
+    // cria blocos
+
     // carregando imgs dos blocos
-    Breakout::imgList[0] = new Image("Resources/BBlu.png");
-    Breakout::imgList[1] = new Image("Resources/BGra.png");
-    Breakout::imgList[2] = new Image("Resources/BGre.png");
-    Breakout::imgList[3] = new Image("Resources/BPur.png");
-    Breakout::imgList[4] = new Image("Resources/BRed.png");
-    Breakout::imgList[5] = new Image("Resources/BYel.png");
+    Breakout::imgBlockList[0] = new Image("Resources/BBlu.png");
+    Breakout::imgBlockList[1] = new Image("Resources/BGra.png");
+    Breakout::imgBlockList[2] = new Image("Resources/BGre.png");
+    Breakout::imgBlockList[3] = new Image("Resources/BPur.png");
+    Breakout::imgBlockList[4] = new Image("Resources/BRed.png");
+    Breakout::imgBlockList[5] = new Image("Resources/BYel.png");
+    Block::imgList = Breakout::imgBlockList;
 
-    Block::imgList = Breakout::imgList;
-
-    // -----------------------------------------
     // posição dos blocos
     float line = 80.0f;
     float column = -320.0f;
@@ -82,10 +84,22 @@ void Breakout::Init()
         column = -320.0f;
     }
 
-    heart = new Image("Resources/life.png");
+    // -----------------------------------------
+    // cria lives
+    Breakout::imgLife = new Image("Resources/life.png");
+    Heart::img = Breakout::imgLife;
 
-    for (uint i = 0; i < lives; i++)
-        life[i] = new Sprite(heart);
+    Heart::finalPosition = lives;
+
+    float heartX = 880.0f;
+
+    Heart* heart;
+    for (uint i = 0; i < lives; i++) {
+        heart = new Heart(i);
+        heart->MoveTo(heartX, 40.0f, Layer::FRONT);
+        scene->Add(heart, STATIC);
+        heartX -= 30.0f;
+    }
 }
 
 // ------------------------------------------------------------------------------
@@ -136,7 +150,7 @@ void Breakout::Update()
     scene->CollisionDetection();
 
     // checa se acabaram os blocos
-    if (scene->SizeStatics() == (uint)0)
+    if (scene->SizeStatics() == lives)
         NextFase();
 
     // checa se o jogador ainda possui vidas
@@ -153,14 +167,6 @@ void Breakout::Draw()
     {
         backg->Draw(window->CenterX(), window->CenterY(), Layer::BACK);
 
-        float x = 850.0f;
-        float y = 40.0f;
-        for (uint i = 0; i < lives; i++)
-        {
-            life[i]->Draw(x, y, Layer::FRONT);
-            x += life[i]->Width() + 10;
-        }
-
         scene->Draw();
     }
 
@@ -175,14 +181,12 @@ void Breakout::Draw()
 
 void Breakout::Finalize()
 {
-    // apaga as imgs
+    // apaga as imgs dos blocos
     for (int i = 0; i < 6; i++)
-        delete Breakout::imgList[i];
+        delete Breakout::imgBlockList[i];
 
-    delete heart;
-
-    for (int i = 0; i < 3; i++)
-        delete life[i];
+    // apaga a img da life
+    delete Breakout::imgLife;
 
     // apaga sprite
     delete backg;

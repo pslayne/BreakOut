@@ -28,7 +28,8 @@ enum ObjTypes
 {
     PLAYER,                             // jogador
     BALL,                               // bola
-    BLOCK                               // bloco
+    BLOCK,                              // bloco
+    HEART                               // life
 };
 
 // ------------------------------------------------------------------------------
@@ -36,8 +37,8 @@ enum ObjTypes
 class Breakout : public Game
 {
 private:
-    Sprite * backg = nullptr;           // plano de fundo
-    Player* player;
+    Sprite* backg = nullptr;            // plano de fundo
+    Player* player;                     // jogador
 
     bool viewScene = true;              // visualiza sprites da cena
     bool viewBBox  = false;             // visualiza bounding box
@@ -50,11 +51,10 @@ protected:
     virtual void NextFase();            // passa para a próxima fase
 
 public:
-    static Scene * scene;               // cena do jogo
-    static Image * imgList[6];
+    static Scene* scene;               // cena do jogo
+    static Image* imgBlockList[6];     // imgs dos blocos
+    static Image* imgLife;              // img da life
     static uint lives;                  // quantidade de vidas
-    Image * heart;
-    Sprite* life[5];
 
     void Init();                        // inicializa��o
     void Update();                      // atualiza��o

@@ -2,7 +2,7 @@
 
 Fase1::Fase1()
 {
-	lives = 5;
+	lives = 3;
 	blockLines = 3;
 	blockColumns = 9;
 	maxBalls = 1;

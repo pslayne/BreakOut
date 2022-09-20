@@ -59,7 +59,7 @@ inline float Ball::Height()
 { return float(sprite->Height()); }
 
 inline void Ball::Draw()
-{ sprite->Draw(x,y,z); }
+{ sprite->Draw(x, y, z); }
 
 // ---------------------------------------------------------------------------------
 

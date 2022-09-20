@@ -31,8 +31,8 @@ Ball::Ball(Player *p)
     state = STOPED;
 
     // cria sprite da bola
-    sprite = new Sprite("Resources/Ball.png");
-    BBox(new Circle(sprite->Height() / 2));
+    Img(new Sprite("Resources/Ball.png"));
+    BBox(new Circle(Img()->Height() / 2));
 
     // tamanho do player � 100x20
     MoveTo(player->X(), player->Y() - 17, Layer::FRONT);
@@ -83,9 +83,6 @@ void Ball::OnCollision(Object *obj)
         velX *= velTax;
         velY *= velTax;
     }
-
-    // experimente deixar o bloco cair em vez de remov�-lo da cena
-    //((Block*) obj)->velY = 200.0f;
 }
 
 // ---------------------------------------------------------------------------------
@@ -119,24 +116,24 @@ void Ball::Update()
     }
 
     // mantem a bola dentro da tela
-    if (x - sprite->Width() / 2 < 0)
+    if (x - Img()->Width() / 2.f < 0)
     {
-        MoveTo(float(sprite->Width() / 2), y);
+        MoveTo(Img()->Width() / 2.f, y);
         velX = -velX;
     }
-    if (x + sprite->Width() / 2 > window->Width())
+    if (x + Img()->Width() / 2.f > window->Width())
     {
-        MoveTo(float(window->Width() - sprite->Width() / 2), y);
+        MoveTo(window->Width() - Img()->Width() / 2.f, y);
         velX = -velX;
     }
-    if (y - sprite->Height() / 2 < 0)
+    if (y - Img()->Height() / 2 < 0)
     {
-        MoveTo(x, float(sprite->Height() / 2));
+        MoveTo(x, Img()->Height() / 2.f);
         velY = -velY;
     }
 
     // verifica se a bola caiu
-    if (y + sprite->Height() > window->Height())
+    if (y + Img()->Height() > window->Height())
     {
         if (numBalls <= maxBalls)
         {

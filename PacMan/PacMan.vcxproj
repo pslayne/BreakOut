@@ -174,6 +174,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Heart.cpp" />
     <ClCompile Include="Home.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Lost.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Heart.h" />
     <ClInclude Include="Home.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Lost.h" />

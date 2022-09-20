@@ -28,7 +28,7 @@ class Ball : public Object
 {
 private:
     Player * player;                    // ponteiro para jogador
-    Sprite * sprite;                    // sprite da bola
+    //Sprite * sprite;                    // sprite da bola
     uint state;                         // estado da bola
     bool ctrlKey = false;                // ctrl de tecla
 

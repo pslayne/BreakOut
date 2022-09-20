@@ -31,7 +31,6 @@ class Object
 private:
     float posX, posY, posZ;     // coordenadas do objeto
     Geometry* bbox;             // bounding box do objeto
-    Sprite* sprite;             // sprite do objeto
 
 protected:
     static Window* & window;    // janela do jogo
@@ -43,6 +42,7 @@ protected:
     const float & z = posZ;     // coordenada z do objeto
 
     uint type;                  // tipo do objeto
+    Sprite* sprite;             // sprite do objeto
 
 public:
     Object();                   // construtor

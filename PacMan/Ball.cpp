@@ -55,7 +55,7 @@ Ball::Ball(Player *p)
 
 Ball::~Ball()
 {
-    delete sprite;
+    //delete sprite;
     numBalls--;
 }
 
@@ -140,9 +140,9 @@ void Ball::Update()
             // parar o objeto
             state = STOPED;
 
-            // reseta as velocidades
-            velX = 100.0f;
-            velY = -100.0f;
+            //// reseta as velocidades
+            //velX = 100.0f;
+            //velY = -100.0f;
         }
         Breakout::lives--;
     }
